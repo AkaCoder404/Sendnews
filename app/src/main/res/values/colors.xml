@@ -3,4 +3,12 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+
+
+    <!-- pHub Colors -->
+    <color name="pHubOrange">#fe9900</color>
+    <color name="pHubBlack">#000000</color>
+    <color name="pHubTopBar">#1e1e1e</color>
+    <color name="pHubSideBar">#252525</color>
+    <color name="pHubGray">#999999</color>
 </resources>

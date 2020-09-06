@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/app_bar_item1"
+        android:icon="@drawable/ic_account_black"
+        android:title="@string/menu_home"
+        />
+    <item
+        android:id="@+id/app_bar_item2"
+        android:icon="@drawable/ic_account_black"
+        android:title="@string/covidData" />
+    <item
+        android:id="@+id/app_bar_item3"
+        android:icon="@drawable/ic_upload_black"
+        android:title="History"/>
+    <item
+        android:id="@+id/app_bar_item4"
+        android:icon="@drawable/ic_date"
+        android:title="@string/Category"
+        />
+
+<!--        <menu>-->
+<!--            <item android:id="@+id/subitem2"-->
+<!--                android:title="SubItem"/>-->
+<!--        </menu>-->
+</menu>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:padding="0dp"
+    android:layout_marginBottom="40dp"
+    android:background="@color/pHubSideBar"
+    android:theme="@style/AppThemeTwo"
+    >
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom"
+        android:background="@color/pHubSideBar"
+
+        app:itemBackground="@color/pHubSideBar"
+        app:itemIconSize="25dp"
+
+        app:itemTextColor="#ffffff"
+        app:menu="@menu/navigation_header_menu"/>
+
+
+
+</LinearLayout>

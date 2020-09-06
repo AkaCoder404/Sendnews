@@ -1,3 +1,18 @@
 <resources>
-    <string name="app_name">news</string>
+    <string name="app_name">发信</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slide Show</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="account">Account</string>
+    <string name="covidData">Covid-19 Data</string>
+    <string name="upload">Upload</string>
+    <string name="history">History</string>
+    <string name="Category">Categories</string>
+
+    <string name="name1"></string>
+    <string name="name2"></string>
+    <string name="name3"></string>
+
 </resources>

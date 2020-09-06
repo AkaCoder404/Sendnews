@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_home"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+<!--    <androidx.appcompat.widget.Toolbar-->
+<!--        android:id="@+id/toolbar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="?attr/actionBarSize"-->
+<!--        android:layout_gravity="center_horizontal"-->
+<!--        android:background="@color/pHubTopBar"-->
+<!--        android:theme="@style/AppTheme.AppBarOverlay"-->
+<!--        android:elevation="4dp"-->
+<!--        android:fitsSystemWindows="true"-->
+<!--        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
+<!--        app:titleTextColor="@color/pHubGray"-->
+<!--        app:logo="@drawable/logo" >-->
+<!--    </androidx.appcompat.widget.Toolbar>-->
+    <include
+        android:id="@+id/navigation"
+        layout="@layout/navigation_view">
+
+        <include
+            android:id="@+id/toolbar"
+            layout = "@layout/app_bar" />
+
+    </include>
+
+</RelativeLayout>
