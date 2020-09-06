@@ -7,6 +7,8 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface ApiInterface {
+
+
     @GET("events.json")
     Call<News> getNews();
 
@@ -15,4 +17,5 @@ public interface ApiInterface {
     Call<News> searchNews(
             @Query("q") String keyword
     );
+
 }

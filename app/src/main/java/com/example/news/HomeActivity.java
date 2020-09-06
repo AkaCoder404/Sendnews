@@ -46,19 +46,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private AppBarConfiguration mAppBarConfiguration;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        //Top Toolbar
+        //Toolbar
         mtoolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mtoolbar);
 
-        // data = (TextView) findViewById(R.id.text_home);
-
+        //Navigation View
         drawer = findViewById(R.id.navigation);
         NavigationView navigationView = findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -79,34 +77,33 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         NavigationUI.setupWithNavController(navigationView, navController);
 
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search, menu);
 
         //Search --> Not Currently Working
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        final SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-        MenuItem searchMenuItem = menu.findItem(R.id.action_search);
-
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setQueryHint("Search Latest News...");
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                if (s.length() >2 ) {
-                    HomeFragment.LoadJson(s);
-                }
-                return false;
-            }
-            @Override
-            public boolean onQueryTextChange(String s) {
-                HomeFragment.LoadJson(s);
-                return false;
-            }
-        });
-        searchMenuItem.getIcon().setVisible(false, false);
+//        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+//        final SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+//        MenuItem searchMenuItem = menu.findItem(R.id.action_search);
+//
+//        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+//        searchView.setQueryHint("Search Latest News...");
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String s) {
+//                if (s.length() >2 ) {
+//                    HomeFragment.LoadJson(s);
+//                }
+//                return false;
+//            }
+//            @Override
+//            public boolean onQueryTextChange(String s) {
+//                HomeFragment.LoadJson(s);
+//                return false;
+//            }
+//        });
+//        searchMenuItem.getIcon().setVisible(false, false);
         return true;
     }
     @Override
@@ -148,5 +145,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 
 }

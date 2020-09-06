@@ -4,9 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class GeoInfo {
-    @SerializedName("originText")
-    @Expose
-    private String originText;
+
 
     @SerializedName("geoName")
     @Expose
@@ -19,4 +17,8 @@ public class GeoInfo {
     @SerializedName("longitude")
     @Expose
     private String longitude;
+
+    @SerializedName("originText")
+    @Expose
+    private String originText;
 }

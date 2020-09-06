@@ -1,6 +1,7 @@
 package com.example.news.ui.home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.news.activities.NewsDetailActivity;
 import com.example.news.adapters.NewsListAdapter;
 import com.example.news.R;
 import com.example.news.adapters.PaginationAdapter;
@@ -42,56 +44,46 @@ public class HomeFragment extends Fragment implements AbsListView.OnScrollListen
     String url="https://covid-dashboard.aminer.cn/api/event/5f05f3f69fced0a24b2f84ee";
     String urlTest = "http://newsapi.org/v2/everything?q=bitcoin&from=2020-08-04&sortBy=publishedAt&apiKey=API_KEY";
     //Variables
-    private final static String TAG_HomeFragment = "HomeFragment";
-    private SwipeRefreshLayout mSwipeRefreshLayout;
-    private HomeFragmentAdapter mHomeFragmentAdapter;
-    private HomeViewModel homeViewModel;
-    private TextView secondText;
-    private Button button1;
-    static Context context;
+    private final String TAG_HomeFragment = "HomeFragment";
+    private TextView topHeadline;
+    private Context context;
 
     // Adding Cards
-    private static RecyclerView recyclerView;
-    private static RecyclerView.LayoutManager layoutManager;
-    private static List<Article> articles = new ArrayList<>();
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
+    private List<Article> articles = new ArrayList<>();
     private NewsListAdapter adapter;
+
+    //Swipe to Refresh
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     //Pagination
     private PaginationAdapter paginationAdapter;
     private List<Pagination> values = new ArrayList<>();
 
+    //New Activity
+    public Intent mintent;
+    public Article marticle;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
         final View root = inflater.inflate(R.layout.fragment_home, container, false);
-        context = getContext();
+        context = getActivity();
         //textView = root.findViewById(R.id.text_home);
 
-//        recyclerView = root.findViewById(R.id.recycler_view);
-//        mHomeFragmentAdapter = new HomeFragmentAdapter();
-//        recyclerView.setAdapter(mHomeFragmentAdapter);
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-//        recyclerView.setLayoutManager(layoutManager);
-
-          //Cards
+        //Cards
         // Get Activity
 
         //Swipe Up to Refresh
         mSwipeRefreshLayout = root.findViewById(R.id.swipe_refresh);
+        layoutManager = new LinearLayoutManager(context);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
-
-        // RecyclerView
+        // RecyclerView + Adapter
         recyclerView = root.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        //recyclerView.setNestedScrollingEnabled(false);
         adapter = new NewsListAdapter(articles, context);
         recyclerView.setAdapter(adapter);
-
-        LoadJson("");
-
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
@@ -108,9 +100,9 @@ public class HomeFragment extends Fragment implements AbsListView.OnScrollListen
 
         return root;
     }
-    //Load From Website - Working
-    public static void LoadJson(final String keyword){
-        ApiInterface apiInterface = Api.getApiClient().create(ApiInterface.class);
+    //Load From Website - Working --> Not with Keyword
+    public void LoadJson(final String keyword){
+        ApiInterface apiInterface = Api.getApiClient("https://covid-dashboard.aminer.cn/api/dist/").create(ApiInterface.class);
         Call<News> call;
 
         if(keyword.length() > 0) {
@@ -128,17 +120,15 @@ public class HomeFragment extends Fragment implements AbsListView.OnScrollListen
                         articles.clear();
                     }
                     articles = response.body().getArticle();
-//                    for (Article r : articles) {
-//                        Log.d("Id", r.getId());
-//                        Log.d("Title", r.getTitle());
-//                    }
+                    setUpRecyclerView(articles);
+
                 }
                 else {
                     Toast.makeText(context,"No Result", Toast.LENGTH_SHORT).show();
                 }
                 System.out.println(articles.size() + " have been read");
                 Log.d(TAG_HomeFragment, "On Response Finished");
-                setUpRecyclerView(articles);
+
             }
             @Override
             public void onFailure(Call<News> call, Throwable t) {
@@ -148,21 +138,42 @@ public class HomeFragment extends Fragment implements AbsListView.OnScrollListen
 
     }
     //RecyclerView
-    private static void setUpRecyclerView(List<Article> articles) {
-
-        NewsListAdapter adapter = new NewsListAdapter(articles, context);
+    private void setUpRecyclerView(List<Article> articles) {
+        adapter = new NewsListAdapter(articles, context);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(adapter);
+        initListener();
         adapter.notifyDataSetChanged();
+
     }
 
-    //Infinite Scroll
+    //Infinite Scroll -> implement later
+    //Click Cards
+
+    private void initListener() {
+        adapter.setOnItemClickListener(new NewsListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Log.d(TAG_HomeFragment, "Item Clicked and Sending Intent");
+                Intent intent = new Intent(getActivity(), NewsDetailActivity.class);
+                Article article = articles.get(position);
+                intent.putExtra("url", article.getId());
+                intent.putExtra("title", article.getTitle());
+                intent.putExtra("date", article.getTime());
+                startActivity(intent);
+            }
+        });
+    }
+
+
+
 
     @Override
     public void onScrollStateChanged(AbsListView absListView, int i) { }
 
     @Override
     public void onScroll(AbsListView absListView, int i, int i1, int i2) {   }
+
 
 
 }

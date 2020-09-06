@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.news.R;
@@ -28,29 +29,15 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.MyView
     private List<Article> articles;
     private Context context;
     private OnItemClickListener onItemClickListener;
+    private String TAG = "NewsListAdapter";
     RequestOptions requestOptions;
 
     public NewsListAdapter(List<Article> articles, Context context) {
         this.articles = articles;
-
+        this.context = context;
         //Sort By Date --> make this into function later
-
         Collections.sort(this.articles, new CustomComparator());
         Collections.reverse(this.articles);
-
-
-
-
-
-
-        this.context = context;
-
-        requestOptions = new RequestOptions();
-//        requestOptions.centerCrop().placeholder(R.mipmap.ic_send_news).error(R.mipmap.ic_send_news);
-        requestOptions.placeholder(Utils.getRandomDrawbleColor());
-        requestOptions.error(Utils.getRandomDrawbleColor());
-        requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL);
-        requestOptions.centerCrop();
     }
     @NonNull
     @Override
@@ -62,8 +49,16 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holders, int position) {
         final MyViewHolder holder = holders;
-        Log.d("Adapter", "Creating Adapter");
+        Log.d("Adapter", "Creating Adapter " + position);
         Article model = articles.get(position);
+        //Request Options
+//        requestOptions = new RequestOptions();
+//        requestOptions.centerCrop().placeholder(R.mipmap.ic_send_news).error(R.mipmap.ic_send_news);
+//        requestOptions.placeholder(Utils.getRandomDrawbleColor());
+//        requestOptions.error(Utils.getRandomDrawbleColor());
+//        requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL);
+//        requestOptions.centerCrop();
+
         //Set Cards
         holder.title.setText("Title: " + model.getTitle());
         holder.desc.setText("ID: " + model.getId());
@@ -71,6 +66,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.MyView
         holder.source.setText(model.getType());
         holder.publisher.setText("Temp");
         holder.author.setText("Temp");
+        //Glide.with(context).load("https://i.imgur.com/bIRGzVO.jpg").into(holder.imageView);
 
         // Since There are No Images
         holder.imageView.setVisibility(View.GONE);
@@ -98,20 +94,18 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.MyView
 //            .transition(DrawableTransitionOptions.withCrossFade())
 //            .into(holder.imageView);
     }
-
-
     @Override
     public int getItemCount() {
-        //Limit Number of Articles (Implement up swipe to View More Later)
+        //Limit Number of Articles
         if(articles.size() > limit){
             return limit;
         }
         else {
             return articles.size();
         }
-        //return articles.size();
     }
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        Log.d(TAG, "setOnItemClickListener");
         this.onItemClickListener = onItemClickListener;
     }
     public interface OnItemClickListener {
@@ -136,14 +130,13 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.MyView
             imageView = itemView.findViewById(R.id.img);
             progressBar = itemView.findViewById(R.id.card_progressBar);
             shadowImageView = itemView.findViewById(R.id.card_shadow_bottom);
-
             this.onItemClickListener = onItemClickListener;
-
         }
-
         @Override
         public void onClick(View v) {
-            onItemClickListener.onItemClick(v, getAdapterPosition());
+            Log.d("NewsListAdapter", "Item Clicked " + getAdapterPosition());
+            this.onItemClickListener.onItemClick(v, getAdapterPosition());
+            Log.d("NewsListAdapter", "Item Clicked ");
         }
     }
 

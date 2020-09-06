@@ -29,6 +29,7 @@ public class News {
 
     public List<Article> getArticle() {
         return article;
+
     }
     public void setArticle(List<Article> article) {
         this.article = article;

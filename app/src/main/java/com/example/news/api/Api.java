@@ -15,13 +15,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Api {
 
-    //public static final String BASE_URL = "https://covid-dashboard-api.aminer.cn/event/";
-    public static final String BASE_URL = "https://covid-dashboard.aminer.cn/api/dist/";
-    public static final String URL = "https://covid-dashboard.aminer.cn/api/dist/events.json";
     public static Retrofit retrofit;
+    public static Retrofit getApiClient(String BASE_URL) {
 
-    public static Retrofit getApiClient() {
-
+        if (retrofit != null) retrofit = null;
         if (retrofit == null ) {
             retrofit = new Retrofit.Builder().baseUrl(BASE_URL)
                     .client(getUnsafeOkHttpClient().build())
