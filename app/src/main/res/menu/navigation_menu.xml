@@ -7,23 +7,22 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_home"
             android:title="@string/menu_home" >
-<!--            <menu>-->
-<!--                <item-->
-<!--                    android:id="@+id/nav_home_sub1"-->
-<!--                    android:icon="@drawable/ic_menu_camera"-->
-<!--                    android:title="@string/menu_home"/>-->
-<!--            </menu>-->
         </item>
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_covidData"
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/covidData" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:id="@+id/nav_history"
+            android:icon="@drawable/ic_date"
             android:title="@string/history" />
+        <item
+            android:id="@+id/Categories"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/Category"
+            />
     </group>
 
     <item

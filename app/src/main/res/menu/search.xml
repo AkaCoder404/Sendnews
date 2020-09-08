@@ -16,6 +16,10 @@
         android:orderInCategory="100"
         android:title="Settings"
         app:showAsAction="never" />
-
+    <item
+        android:id="@+id/clear_history"
+        android:orderInCategory="101"
+        android:title="Clear History"
+        app:showAsAction="never" />
 
 </menu>

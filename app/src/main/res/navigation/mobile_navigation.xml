@@ -12,14 +12,14 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.news.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_covid_data" />
+        android:id="@+id/nav_history"
+        android:name="com.example.news.ui.history.HistoryFragment"
+        android:label="News History"
+        tools:layout="@layout/fragment_history" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.news.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_covidData"
+        android:name="com.example.news.ui.covidData.CovidDataFragment"
+        android:label="Covid Data"
+        tools:layout="@layout/fragment_covid_data" />
 </navigation>

@@ -10,13 +10,8 @@ import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
 public interface NewsDetailApiInterface {
-
     @GET("{id}")
     Call<ArticleContent> getArticleContent(@Path("id") String postId);
-
-    @GET("5f52e7d39fced0a24b35e783")
-    Call<ArticleContent> getArticleContentTest();
-
 }
 
 

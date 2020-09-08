@@ -24,15 +24,12 @@ public class MainActivity extends AppCompatActivity {
     ImageView image;
     TextView slogan;
     SQLiteDatabase allNewsDataBase;
+    SQLiteDatabase newsHistory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-//        allNewsDataBase = openOrCreateDatabase("newsList.db", SQLiteDatabase.CREATE_IF_NECESSARY, null);
-//        String queryString = "CREATE TABLE NEWS_LIST (id INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, AGE INTEGER)";
-//        allNewsDataBase.execSQL(queryString);
 
         //Animations
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);

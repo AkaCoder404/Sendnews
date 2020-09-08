@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -17,20 +18,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.WindowManager;
-import android.widget.Button;
-import androidx.appcompat.widget.SearchView;
-import android.graphics.fonts.FontFamily;
-import android.graphics.fonts.*;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.news.models.Article;
-import com.example.news.ui.home.HomeFragment;
+import com.example.news.data.HistoryViewModel;
 import com.google.android.material.navigation.NavigationView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -38,12 +31,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public static TextView data;
     public static String dataString;
 
-    //Variables
+    //View Variables
     private String TAG = "HomeActivity";
     private DrawerLayout drawer;
     private ActionBarDrawerToggle mToggle;
     private Toolbar mtoolbar;
     private AppBarConfiguration mAppBarConfiguration;
+
+    //Class Variables
+    private HistoryViewModel historyViewModel;
 
 
     @Override
@@ -69,13 +65,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                R.id.nav_home, R.id.nav_covidData, R.id.nav_history)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -119,16 +114,30 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-            case R.id.item1:
+            case R.id.account:
                 return true;
-            case R.id.item2:
+            case R.id.register:
                 return true;
-            case R.id.item3:
+            case R.id.upload:
+                return true;
+
+            case R.id.clear_history:
+                historyViewModel = ViewModelProviders.of(this).get(HistoryViewModel.class);
+                historyViewModel.deleteAllNotes();
+                Toast.makeText(this, "Clear History", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
+
+
+
+
+
+
     @SuppressWarnings("StatementWithEmptyBody")
     // @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -136,9 +145,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         if (id == R.id.nav_home) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_covidData) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_history) {
 
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
