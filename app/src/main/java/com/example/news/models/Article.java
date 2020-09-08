@@ -9,18 +9,23 @@ public class Article {
     @SerializedName("_id")
     @Expose
     private String id;
+
     @SerializedName("type")
     @Expose
     private String type;
+
     @SerializedName("title")
     @Expose
     private String title;
+
     @SerializedName("category")
     @Expose
     private String category;
+
     @SerializedName("time")
     @Expose
     private String time;
+
     @SerializedName("lang")
     @Expose
     private String lang;

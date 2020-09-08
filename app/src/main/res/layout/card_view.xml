@@ -4,37 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent" 
     android:layout_height="wrap_content"
-    android:background="@color/pHubBlack"
-    >
-
+    android:background="@color/pHubBlack">
     <androidx.cardview.widget.CardView
+        android:id="@+id/article_cardView"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:layout_marginRight="11dp"
         android:layout_marginLeft="11dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="7dp"
+        app:cardBackgroundColor="@color/pHubSideBar"
         app:cardElevation="@dimen/cardview_default_elevation"
         app:cardCornerRadius="10dp">
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground" >
+            android:background="?android:attr/selectableItemBackground">
             <ImageView
                 android:id="@+id/img"
                 android:transitionName="img"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:scaleType="centerCrop"
-                tools:ignore="UnusedAttribute" />
+                tools:ignore="UnusedAttribute"/>
             <ImageView
                 android:id="@+id/card_shadow_bottom"
                 android:src="@drawable/bottom_shadow"
                 android:layout_alignBottom="@id/img"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"/>
-
             <ProgressBar
                 android:id="@+id/card_progressBar"
                 android:layout_marginTop="70dp"
@@ -42,7 +40,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             </ProgressBar>
-
             <TextView
                 android:id="@+id/card_author_textView"
                 android:text="Author"
@@ -58,9 +55,7 @@
                 android:layout_alignStart="@+id/card_title"
                 android:layout_alignRight="@+id/layoutDate"
                 android:layout_alignTop="@+id/layoutDate"
-                android:layout_alignEnd="@+id/layoutDate"
-                />
-            
+                android:layout_alignEnd="@+id/layoutDate" />
             <FrameLayout
                 android:id="@+id/layoutDate"
                 android:layout_width="wrap_content"
@@ -71,11 +66,9 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="-50dp">
-
                 <ImageView
                     android:layout_width="15dp"
                     android:layout_height="15dp"
-
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="7dp"
                     android:backgroundTint="@color/pHubGray"
@@ -90,10 +83,7 @@
                     android:paddingTop="5dp"
                     android:textColor="@color/pHubGray"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-
-                    />
-
+                    android:layout_height="wrap_content" />
             </FrameLayout>
 
             <TextView
@@ -109,7 +99,6 @@
                 android:layout_marginTop="10dp"
                 android:layout_below="@id/img"
                 android:id="@+id/card_title"/>
-
             <TextView
                 android:id="@+id/desc"
                 android:textColor="@color/pHubGray"
@@ -120,26 +109,22 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="5dp"
                 android:text="Description" />
-
             <TextView
-
                 android:id="@+id/card_source"
-                android:layout_width="wrap_content"
+                android:layout_width="180dp"
                 android:layout_height="20dp"
                 android:layout_below="@id/desc"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginBottom="16dp"
-
                 android:textColor="@color/pHubGray"
                 android:maxLines="1"
                 android:drawablePadding="10dp"
                 android:singleLine="true"
                 android:text="Source"/>
-
             <TextView
                 android:id="@+id/card_time"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="20dp"
                 android:layout_below="@id/desc"
                 android:layout_marginTop="10dp"
@@ -150,7 +135,15 @@
                 android:textColor="@color/pHubGray"
                 android:singleLine="true"
                 android:text="Time"/>
-
+            <Button
+                android:id="@+id/favorite_icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="35dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/card_time"
+                android:layout_below="@id/desc"
+                android:background="@drawable/ic_favorite_not_filled"/>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </FrameLayout>

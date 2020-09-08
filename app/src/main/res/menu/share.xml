@@ -10,7 +10,8 @@
     </item>
     <item android:id="@+id/web_view"
         android:title="Open With Browser"
-        app:showAsAction="never">
+        app:showAsAction="never"
+        android:enabled="false">
     </item>
 
 

@@ -1,5 +1,9 @@
 package com.example.news;
 
+import com.example.news.models.Article;
+
+import java.util.List;
+
 public class Constants {
     public final static String covidDataUrl = "https://covid-dashboard.aminer.cn/api/dist/epidemic.json";
     public final static String covidEventsUrl = "https://covid-dashboard.aminer.cn/api/dist/events.json";
@@ -12,6 +16,9 @@ public class Constants {
     //https://innovaapi.aminer.cn/covid/api/v1/pneumonia/entityquery?entity=病毒
 
     public final static String covidExpertsListUrl = "https://innovaapi.aminer.cn/predictor/api/v1/valhalla/highlight/get_ncov_expers_list?v=2";
+
+    public static boolean HomeFirstReload = true;
+    public static List<Article> articles;
 
 
 

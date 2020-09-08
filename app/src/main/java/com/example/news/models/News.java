@@ -27,10 +27,8 @@ public class News {
         this.tflag = tflag;
     }
 
-    public List<Article> getArticle() {
-        return article;
+    public List<Article> getArticle() { return article; }
 
-    }
     public void setArticle(List<Article> article) {
         this.article = article;
     }

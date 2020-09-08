@@ -7,14 +7,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
@@ -23,17 +27,21 @@ import com.example.news.Utils;
 import com.example.news.api.Api;
 import com.example.news.api.NewsDetailApiInterface;
 
+import com.example.news.data.History;
+import com.example.news.data.HistoryViewModel;
 import com.example.news.models.ArticleContent;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
+
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class NewsDetailActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener {
-    //Variables
+    //Variables View/Layout
     private ImageView imageView;
     private TextView appbar_title, appbar_subtitle, date, time, title;
     private TextView textView;
@@ -41,10 +49,16 @@ public class NewsDetailActivity extends AppCompatActivity implements AppBarLayou
     private LinearLayout titleAppbar;
     private AppBarLayout appBarLayout;
     private Toolbar mtoolbar;
-
+    private ProgressBar progressBar;
+    private WebView webView;
+    //Variables
     private boolean isHideToolBarView = false;
-    private String mUrl, mImg, mTitle, mDate, mSource, mAuthor, mContent, mTime;
-    private String TAG_NewsDetailActivity = " News Detail Activity";
+    private String mContentPrimaryId, mCategory, mContent, mDate, mEntities, mId, mInfluence, mLang, mRelatedEvents, mSegText, mSource,
+            mTflag, mTime, mTitle, mType, mUrl, mUrls, mStatus;
+    private String TAG = "NewsDetailActivity";
+
+    //History
+    private HistoryViewModel historyViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -71,18 +85,16 @@ public class NewsDetailActivity extends AppCompatActivity implements AppBarLayou
         time = findViewById(R.id.time);
         title = findViewById(R.id.title);
         textView = findViewById(R.id.news_detail_textView);
+        webView = findViewById(R.id.webView);
+        progressBar = findViewById(R.id.progress_bar);
 
         Glide.with(this).load("https://i.imgur.com/bIRGzVO.jpg").transition(DrawableTransitionOptions.withCrossFade()).into(imageView);
 
-
         //Receive Intent
         Intent intent = getIntent();
-        Log.d(TAG_NewsDetailActivity, "Received Intent");
-
         mUrl = intent.getStringExtra("url");
         mTitle = intent.getStringExtra("title");
         mDate = intent.getStringExtra("date");
-        // textView.setText(mUrl + mTitle);
 
         //Update View
         title.setText(mTitle);
@@ -90,12 +102,12 @@ public class NewsDetailActivity extends AppCompatActivity implements AppBarLayou
         appbar_title.setText(mTitle);
         LoadJson(mUrl);
 
+        //Set to History Database When Read
+        historyViewModel = ViewModelProviders.of(this).get(HistoryViewModel.class);
 
     }
 
     //WebView --> maybe implement
-    private void initWebView(String url) { }
-
 
     @Override
     public void onBackPressed() {
@@ -128,48 +140,112 @@ public class NewsDetailActivity extends AppCompatActivity implements AppBarLayou
     public void LoadJson(final String id){
         NewsDetailApiInterface apiInterface = Api.getApiClient("https://covid-dashboard-api.aminer.cn/event/").create(NewsDetailApiInterface.class);
         Call<ArticleContent> articleContentCall = apiInterface.getArticleContent(id);
-
         articleContentCall.enqueue(new Callback<ArticleContent>() {
             @Override
             public void onResponse(Call<ArticleContent> call, Response<ArticleContent> response) {
-                Log.d(TAG_NewsDetailActivity, "On Response Started for " + "https://covid" +
-                        "-dashboard-api.aminer.cn/event/" + id + " Response Body: " + response.body() + " " + response);
+                Log.d(TAG, "On Response Started for " + "https://covid-dashboard-api.aminer.cn/event/" + id + " Response Body: " + response.body() + " " + response);
                 if(response.isSuccessful() && response.body() != null) {
-                    Log.d(TAG_NewsDetailActivity, "Response is Successful");
-                    // Get Info
+                    Log.d(TAG, "Response is Successful");
+                    //Get Information --> deal with lists later
                     ArticleContent body = response.body();
-                    mTitle = response.body().getData().getTitle();
-                    mSource = response.body().getData().getSource();
-                    mContent = response.body().getData().getContent();
-                    mDate = response.body().getData().getTime();
-                    mTime = response.body().getData().getDate();
+                    mContentPrimaryId   = body.getData().get_id();
+                    mCategory           = body.getData().getCategory();
+                    mContent            = body.getData().getContent();
+                    mDate               = body.getData().getTime();
+                    // mEntities           = body.getData().getEntitiesList()
+                    // mGeoInfo            = body.getData().getGeoInfo()
+                    mId                 = body.getData().getId();
+                    mInfluence          = body.getData().getInfluence();
+                    mLang               = body.getData().getLanguage();
+                    // mRelatedEvents   = body.getData().getRelatedEvents();
+                    mSegText            = body.getData().getSeg_text();
+                    mSource             = body.getData().getSource();
+                    mTflag              = body.getData().getTflag();
+                    mTime               = body.getData().getDate();
+                    mType               = body.getData().getType();
+                    // mUrls            = body.getDATA().getUrls();
+                    mStatus             = body.getStatus();
 
+                    // Show Information
                     textView.setText(mContent);
 
+                    // show how long ago article was posted
                     mDate = mDate.substring(0, 10) + "T" + mTime.substring(17,25) + "Z";
+                    mDate = mDate.replace('/', '-');
                     time.setText(Utils.DateToTimeFormat(mDate));
                     date.setText(mTime.substring(0, 16));
 
+                    //WebView if there is
+                    //Url
+                    if (body.getData().getUrlsList().size() != 0) {
+                        mUrl = body.getData().getUrlsList().get(0);
+                        try {
+                            initWebView((mUrl));
+                        }
+                        catch (Exception e) {
+                            Log.d(TAG, "cannot connect to webpage");
+                            webView.setVisibility(View.GONE);
+                            progressBar.setVisibility(View.GONE);
+                        }
+                    }
+                    else  {
+                        webView.setVisibility(View.GONE);
+                        progressBar.setVisibility(View.GONE);
+                    }
 
-                    if(mSource.equals("")) {
-                        appbar_subtitle.setText("No Source");
+                    //Test Output
+                    try {
+                        System.out.println("Article\n" +
+                                "_id        :" + body.getData().get_id() + "\n" +
+                                "category   :" + body.getData().getCategory() + "\n" +
+                                "content    :" + body.getData().getContent() + "\n" +
+                                //"date       :" + body.getData().getEntitiesList().get(0).getLabel() + "," + body.getData().getEntitiesList().get(0).getUrl() + "\n" +
+                                "geoInfo    :" + body.getData().getGeoInfoList().get(0).getGeoName() + "\n" +
+                                "id         :" + body.getData().getInfluence() + "\n" +
+                                //"related eve:" + body.getData().getRelatedEventsList().get(0).getId() + "," + body.getData().getRelatedEventsList().get(0).getScore() + "\n" +
+                                "seg_text   :" + body.getData().getSeg_text() + "\n" +
+                                "source     :" + body.getData().getSource() + "\n" +
+                                "tflag      :" + body.getData().getTflag() + "\n" +
+                                "time       :" + body.getData().getTime() + "\n" +
+                                "title      :" + body.getData().getTitle() + "\n" +
+                                "type       :" + body.getData().getType() + "\n" +
+                                "urls       :" + body.getData().getUrlsList().get(0));
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                    else {
-                        appbar_subtitle.setText(mSource);
-                    }
+
+                    //If Components are Empty
+                    if(mSource.equals("")) { appbar_subtitle.setText("No Source"); }
+                    else { appbar_subtitle.setText(mSource); }
+
+                    if(mContent.equals("")) { textView.setText("No Content to be Shown"); }
+                    else {textView.setText(mContent); }
+
+                    //Store Info
+                    historyViewModel.insert(new History(mContentPrimaryId, mCategory, mContent, mDate, mId, mInfluence, mLang, mSegText, mSource, mTime, mTitle, mType, mStatus));
 
                 }
                 else {
-                    Log.d(TAG_NewsDetailActivity, "Was Not Able to Load");
+                    Log.d(TAG, "was not able to load news");
                 }
             }
             @Override
             public void onFailure(Call<ArticleContent> call, Throwable t) {
-                Log.d(TAG_NewsDetailActivity, "Connection Failure");
+                Log.d(TAG, "Connection Failure");
             }
         });
     }
-
+    private void initWebView(String url){
+            webView.getSettings().setLoadsImagesAutomatically(true);
+            webView.getSettings().setJavaScriptEnabled(true);
+            webView.getSettings().setDomStorageEnabled(true);
+            webView.getSettings().setSupportZoom(true);
+            webView.getSettings().setBuiltInZoomControls(true);
+            webView.getSettings().setDisplayZoomControls(false);
+            webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+            webView.setWebViewClient(new WebViewClient());
+            webView.loadUrl(url);
+    }
     //Share
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -187,16 +263,10 @@ public class NewsDetailActivity extends AppCompatActivity implements AppBarLayou
                 String body = mTitle + "\n"  + "https://covid-dashboard-api.aminer.cn/event/" + mUrl + "\n" + mDate + "\n \n" +  mContent;
                 i.putExtra(Intent.EXTRA_TEXT, body);
                 startActivity(Intent.createChooser(i, "Share with : "));
-
             } catch (Exception e)  {
                 Toast.makeText(this, "Can not be shared", Toast.LENGTH_SHORT).show();
             }
-
         }
         return super.onOptionsItemSelected(item);
-
     }
-
-
-
 }
