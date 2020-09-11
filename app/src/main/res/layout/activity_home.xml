@@ -29,8 +29,6 @@
     <include
         android:id="@+id/navigation"
         layout="@layout/navigation_view">
-
-
     </include>
 
 </RelativeLayout>

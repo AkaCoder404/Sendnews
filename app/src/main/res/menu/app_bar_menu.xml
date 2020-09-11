@@ -1,28 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+     <item
+        android:id="@+id/action_search"
+        android:orderInCategory="100"
+        android:title="Search"
+         android:icon="@drawable/ic_search"
+        app:showAsAction="always"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"/>
     <item
-        android:id="@+id/app_bar_item1"
-        android:icon="@drawable/ic_account_black"
-        android:title="@string/menu_home"
-        />
-    <item
-        android:id="@+id/app_bar_item2"
-        android:icon="@drawable/ic_account_black"
-        android:title="@string/covidData" />
-    <item
-        android:id="@+id/app_bar_item3"
-        android:icon="@drawable/ic_upload_black"
-        android:title="History"/>
-    <item
-        android:id="@+id/app_bar_item4"
-        android:icon="@drawable/ic_date"
-        android:title="@string/Category"
-        />
-
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="Settings"
+        app:showAsAction="never" />
+<!--    <item-->
+<!--        android:id="@+id/clear_history"-->
+<!--        android:orderInCategory="101"-->
+<!--        android:title="Clear History"-->
+<!--        app:showAsAction="never" />-->
+<!--    <item-->
+<!--        android:id="@+id/appBar_Categories"-->
+<!--        android:orderInCategory="102"-->
+<!--        android:title="Categories"-->
+<!--        >-->
 <!--        <menu>-->
-<!--            <item android:id="@+id/subitem2"-->
-<!--                android:title="SubItem"/>-->
+<!--            <group-->
+<!--                android:id="@+id/groupCategory"-->
+<!--                android:visible="true"-->
+<!--                android:enabled="true"-->
+<!--                android:checkableBehavior="all">-->
+<!--                <item-->
+<!--                    android:id="@+id/checkAllCategory"-->
+<!--                    android:title="Check All"-->
+<!--                    android:checkable="true"-->
+<!--                    android:checked="true"-->
+<!--                    android:orderInCategory="99"/>-->
+
+<!--                <item-->
+<!--                    android:id="@+id/newsCategoryCheckable"-->
+<!--                    android:title="NEWS"-->
+<!--                    android:orderInCategory="100"-->
+<!--                    android:checkable="true"-->
+<!--                    android:checked="true" />-->
+<!--                <item-->
+<!--                    android:id="@+id/papersCategoryCheckable"-->
+<!--                    android:title="PAPERS"-->
+<!--                    android:orderInCategory="101"-->
+<!--                    android:checkable="true"-->
+<!--                    android:checked="true"/>-->
+<!--                <item-->
+<!--                    android:id="@+id/eventsCategoryCheckable"-->
+<!--                    android:title="EVENTS"-->
+<!--                    android:orderInCategory="102"-->
+<!--                    android:checkable="true"-->
+<!--                    android:checked="true"/>-->
+<!--            </group>-->
 <!--        </menu>-->
+<!--    </item>-->
 </menu>

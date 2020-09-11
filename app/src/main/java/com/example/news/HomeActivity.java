@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,6 +23,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.news.activities.SettingsActivity;
 import com.example.news.data.HistoryViewModel;
 import com.google.android.material.navigation.NavigationView;
 
@@ -58,14 +60,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         mToggle = new ActionBarDrawerToggle(
-                this, drawer, mtoolbar, R.string.open, R.string.close);
+                this, drawer, mtoolbar, R.string.nav_app_bar_open_drawer_description, R.string.close);
+        mToggle.setDrawerIndicatorEnabled(true);
         drawer.addDrawerListener(mToggle);
         mToggle.syncState();
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_covidData, R.id.nav_history)
+                R.id.nav_home, R.id.nav_covidData, R.id.nav_history, R.id.nav_specialists, R.id.nav_knowledgeGraph)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -75,30 +78,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.search, menu);
-
-        //Search --> Not Currently Working
-//        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-//        final SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-//        MenuItem searchMenuItem = menu.findItem(R.id.action_search);
-//
-//        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-//        searchView.setQueryHint("Search Latest News...");
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String s) {
-//                if (s.length() >2 ) {
-//                    HomeFragment.LoadJson(s);
-//                }
-//                return false;
-//            }
-//            @Override
-//            public boolean onQueryTextChange(String s) {
-//                HomeFragment.LoadJson(s);
-//                return false;
-//            }
-//        });
-//        searchMenuItem.getIcon().setVisible(false, false);
+        inflater.inflate(R.menu.app_bar_menu, menu);
         return true;
     }
     @Override
@@ -115,16 +95,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.account:
+                //Implement account
                 return true;
             case R.id.register:
+                //Implement register
                 return true;
             case R.id.upload:
+                //Implement Upload
                 return true;
-
-            case R.id.clear_history:
-                historyViewModel = ViewModelProviders.of(this).get(HistoryViewModel.class);
-                historyViewModel.deleteAllNotes();
-                Toast.makeText(this, "Clear History", Toast.LENGTH_SHORT).show();
+            case R.id.action_settings:
+                Intent settingsIntent = new Intent(this, SettingsActivity.class);
+                startActivity(settingsIntent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -148,6 +129,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_covidData) {
 
         } else if (id == R.id.nav_history) {
+
+        } else if (id == R.id.nav_specialists) {
+
+        } else if (id == R.id.nav_knowledgeGraph) {
 
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

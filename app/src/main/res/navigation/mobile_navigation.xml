@@ -22,4 +22,17 @@
         android:name="com.example.news.ui.covidData.CovidDataFragment"
         android:label="Covid Data"
         tools:layout="@layout/fragment_covid_data" />
+
+    <fragment
+        android:id="@+id/nav_specialists"
+        android:name="com.example.news.ui.specialists.SpecialistsFragment"
+        android:label="Specialists"
+        tools:layout="@layout/fragment_specialists"/>
+
+    <fragment
+        android:id="@+id/nav_knowledgeGraph"
+        android:name="com.example.news.ui.knowledgeGraph.KnowledgeGraphFragment"
+        label="Specialists"
+        tools:layout="@layout/fragment_knowledge_graph"/>
+
 </navigation>

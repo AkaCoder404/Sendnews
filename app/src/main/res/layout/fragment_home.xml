@@ -29,10 +29,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/darker_gray"
-                android:scrollbars="vertical" />
+                android:scrollbars="vertical"
+                tools:listitem="@layout/card_view"/>
         </LinearLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
     <include
         layout="@layout/error"/>
 </RelativeLayout>

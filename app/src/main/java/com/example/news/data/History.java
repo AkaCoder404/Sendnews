@@ -1,7 +1,9 @@
 package com.example.news.data;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.example.news.models.Data;
@@ -11,13 +13,15 @@ import com.example.news.models.RelatedEvents;
 
 import java.util.List;
 
-@Entity(tableName="news_history_table")
+@Entity(tableName="news_history_table", indices = {@Index(value = {"contentPrimaryId_col"}, unique = true)})
 public class History {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
 
+    @ColumnInfo(name = "contentPrimaryId_col")
     private String contentPrimaryId;
+
     private String category;
     private String content;
     private String date;
