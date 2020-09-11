@@ -5,12 +5,14 @@ import android.app.DatePickerDialog;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
@@ -59,20 +61,26 @@ public class SettingsActivity extends AppCompatActivity {
             Preference lightMode = findPreference("LIGHT");
             setOnPreferenceClick(lightMode);
 
-            Preference category = findPreference("CATEGORYFILTER");
-            setOnPreferenceClick(category);
+            Preference allCategories = findPreference("ALL CATEGORIES");
+            setOnPreferenceClick(allCategories);
 
+            Preference news = findPreference("NEWS");
+            Preference events = findPreference("PAPER");
+            Preference papers = findPreference("EVENT");
+            setOnPreferenceClick(papers);
+            setOnPreferenceClick(news);
+            setOnPreferenceClick(events);
+
+
+            //Preference category = findPreference("CATEGORYFILTER");
+            //setOnPreferenceClick(category);
 
             Preference fromDate = findPreference("DATE");
             setOnPreferenceClick(fromDate);
             bindPreferenceSummaryToValue(fromDate);
 
-
             Preference clearHistory = findPreference(getString(R.string.settings_history_key));
             setOnPreferenceClick(clearHistory);
-
-            Preference clearRecommend = findPreference(getString(R.string.settings_recommend_key));
-            setOnPreferenceClick(clearRecommend);
 
         }
 
@@ -103,9 +111,30 @@ public class SettingsActivity extends AppCompatActivity {
                     else if (key.equalsIgnoreCase("LIGHT")) {
                         Toast.makeText(getActivity(), "Switch Mode", Toast.LENGTH_SHORT).show();
                     }
-                    else if (key.equalsIgnoreCase("CATEGORYFILTER")){
-                        preference.setTitle("Switch");
-                        Log.d("SettingsActivity", key + "has been selected");
+                    else if (key.equalsIgnoreCase("ALL CATEGORIES")){
+                        Log.d("SettingsActivity", key + " has been selected");
+                        CheckBoxPreference all = (CheckBoxPreference) findPreference("ALL CATEGORIES");
+                        CheckBoxPreference news = (CheckBoxPreference) findPreference("NEWS");
+                        CheckBoxPreference papers = (CheckBoxPreference) findPreference("PAPER");
+                        CheckBoxPreference events = (CheckBoxPreference) findPreference("EVENT");
+                        if (all.isChecked()) {
+                            news.setChecked(true);
+                            papers.setChecked(true);
+                            events.setChecked(true);
+                        }
+                        else {
+                            news.setChecked(false);
+                            papers.setChecked(false);
+                            events.setChecked(false);
+                        }
+                    }
+                    else if (key.equalsIgnoreCase("EVENT") || key.equalsIgnoreCase("NEWS") || key.equalsIgnoreCase("PAPER")) {
+                        CheckBoxPreference check = (CheckBoxPreference) findPreference(key);
+                        if (!check.isChecked()) {
+                            CheckBoxPreference all = (CheckBoxPreference) findPreference("ALL CATEGORIES");
+                            all.setChecked(false);
+                        }
+
                     }
                     return false;
                 }

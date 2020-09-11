@@ -44,6 +44,7 @@ import com.example.news.models.KnowledgeEntity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -108,11 +109,7 @@ public class KnowledgeGraphFragment extends Fragment implements SwipeRefreshLayo
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    Toast.makeText(mContext, "Last, Loaded More", Toast.LENGTH_LONG).show();
-                    EntityCount += 10;
-                    mAdapter.setLimit(EntityCount);
-                    recyclerView.setAdapter(mAdapter);
-                    recyclerView.scrollToPosition(EntityCount - 10);
+                    Toast.makeText(mContext, "No More", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -142,6 +139,8 @@ public class KnowledgeGraphFragment extends Fragment implements SwipeRefreshLayo
                         knowledgeEntityList.clear();
                     }
                     knowledgeEntityList = response.body().getEntityList();
+//                    Map<String, String> maps = knowledgeEntityList.get(0).getAbstractInfo().getCovid().getProperties();
+//                    System.out.println(maps);
                     //testOutput();
                     setUpRecyclerView(knowledgeEntityList);
                 }
