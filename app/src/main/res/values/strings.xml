@@ -11,8 +11,8 @@
     <string name="history">History</string>
     <string name="Category">Categories</string>
 
-    <string name="name1"></string>
-    <string name="name2"></string>
-    <string name="name3"></string>
+    <string name="confirmed">Confirmed</string>
+    <string name="cured">Cured</string>
+    <string name="deaths">Deaths</string>
 
 </resources>

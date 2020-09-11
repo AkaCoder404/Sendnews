@@ -18,4 +18,7 @@ public interface ApiInterface {
             @Query("q") String keyword
     );
 
+//    @GET("epidemic.json")
+//    Call<>
+
 }
