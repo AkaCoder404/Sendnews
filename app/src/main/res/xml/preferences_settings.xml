@@ -5,14 +5,15 @@
     android:key="SETTINGS">
 
     <PreferenceCategory
-        android:title="Enable Light Mode">
+        android:title="Theme">
         <SwitchPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="LIGHT"
-            android:summaryOff="Light mode is deactivated"
-            android:summaryOn="Light mode is activated"
+            android:summaryOff="Light Mode is activated"
+            android:summaryOn="Dark Mode is activated"
             android:textColor="@color/pHubGray"
-            android:title="Enable Light Mode" />
+            android:title="Dark / Light Mode"
+            android:enabled="false"/>
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -20,18 +21,45 @@
             <SwitchPreference
                 android:title="Orientation"
                 android:key="ORIENTATION"
-                android:defaultValue="false">
+                android:defaultValue="true"
+                android:enabled="false"
+                >
             </SwitchPreference>
     </PreferenceCategory>
     <PreferenceCategory
-        android:title="@string/Category">
-        <ListPreference
-            android:defaultValue="ALL CATEGORIES"
-            android:entries="@array/settings_news_preference"
-            android:entryValues="@array/settings_news_preference"
-            android:key="CATEGORYFILTER"
-            android:title="@string/Category" />
+        android:title="Categories">
+        <CheckBoxPreference
+            android:title="All Categories"
+            android:key="ALL CATEGORIES"
+            android:defaultValue="true">
+        </CheckBoxPreference>
+        <CheckBoxPreference
+            android:title="News"
+            android:key="NEWS"
+            android:defaultValue="false">
+        </CheckBoxPreference>
+        <CheckBoxPreference
+            android:title="Event"
+            android:key="EVENT"
+            android:defaultValue="false">
+        </CheckBoxPreference>
+        <CheckBoxPreference
+            android:title="Paper"
+            android:key="PAPER"
+            android:defaultValue="false">
+        </CheckBoxPreference>
     </PreferenceCategory>
+
+<!--    <PreferenceCategory-->
+<!--        android:title="@string/Category">-->
+<!--        <ListPreference-->
+<!--            android:defaultValue="LIST ALL CATEGORIES"-->
+<!--            android:entries="@array/settings_news_preference"-->
+<!--            android:entryValues="@array/settings_news_preference"-->
+<!--            android:key="CATEGORYFILTER"-->
+<!--            android:title="Article Type"-->
+<!--            android:summary="%s"/>-->
+<!--    </PreferenceCategory>-->
     <PreferenceCategory
         android:title="Others" >
         <Preference
@@ -41,9 +69,7 @@
         <Preference
             android:title="Clear History"
             android:key="@string/settings_history_key"/>
-        <Preference
-            android:title="@string/settings_clear_recommendations"
-            android:key="@string/settings_recommend_key"/>
+
     </PreferenceCategory>
 
 </PreferenceScreen>

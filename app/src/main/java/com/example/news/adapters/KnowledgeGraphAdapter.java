@@ -83,7 +83,12 @@ public class KnowledgeGraphAdapter extends RecyclerView.Adapter <KnowledgeGraphA
         }
 
         holder.mSource.setText(source);
-        holder.mTime.setText("Hot: " + model.getHot().substring(0, 6));
+        if (model.getHot().length() >= 5) {
+            holder.mTime.setText("Hot: " + model.getHot().substring(0, 6));
+        }
+        else {
+            holder.mTime.setText("Hot: " + model.getHot());
+        }
 
 
         //Images
@@ -111,11 +116,7 @@ public class KnowledgeGraphAdapter extends RecyclerView.Adapter <KnowledgeGraphA
     //limit how many cards are shown
     @Override
     public int getItemCount() {
-        if (knowledgeEntityList.size() > LIMIT) {
-            return LIMIT;
-        } else {
-            return knowledgeEntityList.size();
-        }
+       return knowledgeEntityList.size();
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {

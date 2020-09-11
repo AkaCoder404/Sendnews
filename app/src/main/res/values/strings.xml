@@ -17,7 +17,7 @@
 
 
     <!-- Settings -->
-    <string name="settings_all_label">All</string>
+    <string name="settings_all_label">All CATEGORIES</string>
     <string name="settings_entertainment_label">娱乐</string>
     <string name="settings_military_label">军事</string>
     <string name="settings_education_label">教育</string>

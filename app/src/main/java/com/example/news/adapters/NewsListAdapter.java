@@ -4,11 +4,14 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.preference.CheckBoxPreference;
+import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -37,6 +40,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.prefs.PreferenceChangeEvent;
 
 public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.MyViewHolder> implements Filterable {
     // Variables
@@ -120,12 +124,26 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.MyView
         protected FilterResults performFiltering(CharSequence charSequence) {
             List<Article> filterList = new ArrayList<>();
             sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-            String category = sharedPreferences.getString("CATEGORYFILTER", context.getString(R.string.settings_all_label));
-            System.out.println(category);
+            //String category = sharedPreferences.getString("CATEGORYFILTER", context.getString(R.string.settings_all_label));
+
+            String category = sharedPreferences.getString("All CATEGORIES", context.getString(R.string.settings_all_label));
+
+
+            boolean aller = sharedPreferences.getBoolean("ALL CATEGORIES", true);
+            // System.out.println("\nAll Categories: "  + aller);
+            boolean news = sharedPreferences.getBoolean("NEWS", true);
+            boolean events = sharedPreferences.getBoolean("EVENT", true);
+            boolean papers = sharedPreferences.getBoolean("PAPER", true);
+
+            //System.out.println("News: " + news + "\n" + "Events: " + events  + "\n" + "Papers: " + papers);
+            String s = "";
+            if (news) s += "NEWS";
+            if (events) s+= "EVENT";
+            if (papers) s+= "PAPER";
 
             if (charSequence == null) {
                 filterList.addAll(articlesFull);
-            } else if (category.equalsIgnoreCase("ALL CATEGORIES")) {
+            } else if (aller) {
                 String filterPattern = charSequence.toString().toLowerCase().trim();
                 for (Article article : articlesFull) {
                     if (article.getTitle().toLowerCase().contains(filterPattern)) {
@@ -136,7 +154,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.MyView
             else {
                 String filterPattern = charSequence.toString().toLowerCase().trim();
                 for (Article article : articlesFull) {
-                    if (article.getTitle().toLowerCase().contains(filterPattern) && article.getType().equalsIgnoreCase(category)) {
+                    if (article.getTitle().toLowerCase().contains(filterPattern) && s.toLowerCase().contains(article.getType())) {
                         filterList.add(article);
                     }
                 }

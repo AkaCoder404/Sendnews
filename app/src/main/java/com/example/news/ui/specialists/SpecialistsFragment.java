@@ -137,8 +137,7 @@ public class SpecialistsFragment extends Fragment implements SwipeRefreshLayout.
                         specialists.clear();
                     }
                     specialists = response.body().getSpecialistList();
-                    // Test Expert
-                    testOutput();
+                    // testOutput();
                     setUpRecyclerView(specialists);
                 }
                 else {

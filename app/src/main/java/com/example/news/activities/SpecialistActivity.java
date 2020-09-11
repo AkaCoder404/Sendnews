@@ -100,13 +100,17 @@ public class SpecialistActivity extends AppCompatActivity implements AppBarLayou
 
         //update view
         mAppBarLayoutTitle.setText(mName_zh);
+        if (mName == null || mName.length() == 0) {
+            mName_zh = "没有中文名";
+            mAppBarLayoutTitle.setText(mName_zh);
+        }
         mAppBarLayoutSubtitle.setText(mName);
         String names = mName_zh + ", " + mName;
         mTitle.setText(names);
         mSubtitle.setText(mProfileAffiliationString);
 
         String content = "Profile. . .\n" +
-                "Address: " + mProfileAddressString + "\n" +
+                "Address: " + mProfileAddressString.replaceAll("\n", " ") + "\n" +
                 "Affiliation: " + mProfileAffiliationString + "\n" +
                 "Affiliation_zh: " + mProfileAffiliationZhString + "\n" +
                 "Bio: " + mProfileBioString + "\n" +
@@ -117,7 +121,7 @@ public class SpecialistActivity extends AppCompatActivity implements AppBarLayou
                 "Email: " + mEmailString + "\n" +
                 "Email_cr: " + mEmailCrString + "\n" +
                 "Fax: " + mFaxString + "\n" +
-                "Note: " + mNoteString + "\n" +
+                "Note: " + mNoteString.replaceAll("<br>", " ") + "\n" +
                 "Is Passed Away: " + mIsPassedAway;
 
         mContent.setText(content);

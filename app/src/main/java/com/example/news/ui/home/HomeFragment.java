@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.ListPreference;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -151,12 +152,15 @@ public class HomeFragment extends Fragment implements SwipyRefreshLayout.OnRefre
         if (Constants.HomeFirstReload == true)  {
             onLoadingSwipeRefresh("");
             Constants.HomeFirstReload = false;
+            System.out.println((articles.size()));
             // Temporary Solution to not reload all articles
         }
         else{
-                articles = Constants.articles;
+            System.out.println((articles.size()));
+                articles = new ArrayList<> (Constants.articles);
+            System.out.println((articles.size()));
+
             if (articles != null) {
-                System.out.println((articles.size()));
                 setUpRecyclerView(articles);
             }
             else textView.setText("Swipe Down to Load News");
@@ -193,7 +197,7 @@ public class HomeFragment extends Fragment implements SwipyRefreshLayout.OnRefre
                     }
                     articles = response.body().getArticle();
                     // Save Articles --> don't have to regenerate unless reloaded
-                    Constants.articles = articles;
+                    Constants.articles = new ArrayList<>(articles);
                     // Test Article
                     // testOutput(articles.get(0));
 
@@ -384,8 +388,9 @@ public class HomeFragment extends Fragment implements SwipyRefreshLayout.OnRefre
     @Override
     public void onResume() {
         super.onResume();
+        getActivity().getSharedPreferences("SETTINGS", Context.MODE_PRIVATE).registerOnSharedPreferenceChangeListener(this);;
+        System.out.println("On Resume Article Size: " + articles.size());
         Toast.makeText(getActivity(), "Main Page", Toast.LENGTH_SHORT).show();
-        getActivity().getSharedPreferences("SETTINGS", Context.MODE_PRIVATE).registerOnSharedPreferenceChangeListener(this);
         adapter.getFilter().filter("");
 
     }
@@ -394,9 +399,11 @@ public class HomeFragment extends Fragment implements SwipyRefreshLayout.OnRefre
     public void onPause() {
         super.onPause();
         getActivity().getSharedPreferences("SETTINGS", Context.MODE_PRIVATE).unregisterOnSharedPreferenceChangeListener(this);
-        Constants.articles = articles;
+        System.out.println("On Pause Article Size: " + articles.size());
     }
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) { }
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+
+    }
 }
