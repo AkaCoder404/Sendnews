@@ -1,38 +1,39 @@
 <resources>
-    <!-- Base application theme. -->
-
+    <!-- Custom Application Theme -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/pHubOrange</item>
+        <item name="overlapAnchor">false</item>
+        <item name="android:listSeparatorTextViewStyle">@style/ListSeparatorText</item>
+        <item name="dropdownListPreferredItemHeight">?attr/actionBarSize</item>
+        <item name="android:textColorSecondary">@color/pHubGray</item>
     </style>
 
-    <style name="AppThemeTwo" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/pHubOrange</item>
-        <item name="colorPrimaryDark">@color/pHubOrange</item>
-        <item name="colorAccent">@color/pHubOrange</item>
-        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
-        <item name="android:colorPressedHighlight">@color/pHubOrange</item>
-        <item name="android:colorLongPressedHighlight">@color/pHubOrange</item>
-        <item name="android:colorFocusedHighlight">@color/pHubOrange</item>
-        <item name="android:colorActivatedHighlight">@color/pHubOrange</item>
-        <item name="android:activatedBackgroundIndicator">@color/pHubOrange</item>
-        <item name="windowActionModeOverlay">true</item>
-        <item name="android:datePickerDialogTheme">@color/pHubOrange</item>
-        <item name="android:windowBackground">@color/pHubGray</item>
+    <style name="PreferenceScreen" parent="AppTheme">
         <item name="android:textColor">@color/pHubGray</item>
-
     </style>
 
-    <style name="AppThemeThree" parent="ThemeOverlay.AppCompat.Light">
-        <item name="colorPrimary">@color/pHubOrange</item>
-        <item name="colorPrimaryDark">@color/pHubOrange</item>
-        <item name="colorAccent">@color/pHubOrange</item>
-        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
-
+    <style name="ListSeparatorText" parent="android:Widget.TextView"><!--parent is optional -->
+        <item name="android:background">@color/pHubGray</item>
+        ...
     </style>
+
+
+
+    <!-- Base Application Theme  -->
+    <style name="AppThemeLight" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#ffaa2b</item>
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="colorAccent">#ffaa2b</item>
+        <item name="overlapAnchor">false</item>
+        <item name="android:listSeparatorTextViewStyle">@style/ListSeparatorText</item>
+        <item name="dropdownListPreferredItemHeight">?attr/actionBarSize</item>
+        <item name="android:textColorSecondary">@color/pHubGray</item>
+    </style>
+
 
     <style name = "AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>

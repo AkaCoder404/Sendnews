@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="Settings"
+    android:key="SETTINGS">
+
+    <PreferenceCategory
+        android:title="Enable Light Mode">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="LIGHT"
+            android:summaryOff="Light mode is deactivated"
+            android:summaryOn="Light mode is activated"
+            android:textColor="@color/pHubGray"
+            android:title="Enable Light Mode" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Screen Orientation">
+            <SwitchPreference
+                android:title="Orientation"
+                android:key="ORIENTATION"
+                android:defaultValue="false">
+            </SwitchPreference>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/Category">
+        <ListPreference
+            android:defaultValue="ALL CATEGORIES"
+            android:entries="@array/settings_news_preference"
+            android:entryValues="@array/settings_news_preference"
+            android:key="CATEGORYFILTER"
+            android:title="@string/Category" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Others" >
+        <Preference
+            android:defaultValue="2019-01-01"
+            android:key="DATE"
+            android:title="Date" />
+        <Preference
+            android:title="Clear History"
+            android:key="@string/settings_history_key"/>
+        <Preference
+            android:title="@string/settings_clear_recommendations"
+            android:key="@string/settings_recommend_key"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

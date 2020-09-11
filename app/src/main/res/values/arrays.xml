@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  for the human-readable labels -->
+    <string-array name="settings_news_preference">
+        <item>"All CATEGORIES"</item>
+        <item>"NEWS"</item>
+        <item>"PAPER"</item>
+        <item>"EVENT"</item>
+    </string-array>
+
+</resources>

@@ -8,20 +8,22 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_home"
-            android:title="@string/menu_home" >
+            android:iconTint="@color/pHubGray"
+            android:title="@string/menu_home">
         </item>
         <item
             android:id="@+id/nav_covidData"
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/covidData" />
         <item
-            android:id="@+id/nav_history"
-            android:icon="@drawable/ic_date"
-            android:title="@string/history" />
-        <item
-            android:id="@+id/Categories"
+            android:id="@+id/nav_knowledgeGraph"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/Category"
+            android:title="Knowledge Entity"
+            />
+        <item
+            android:id="@+id/nav_specialists"
+            android:icon="@drawable/ic_account"
+            android:title="Professionals"
             />
     </group>
 
@@ -29,11 +31,9 @@
         android:title="Extra">
         <menu>
             <item
-                android:id="@+id/extra_share"
-                android:title="Share"
-                />
+                android:id="@+id/nav_history"
+                android:icon="@drawable/ic_date"
+                android:title="@string/history" />
         </menu>
-
     </item>
-
 </menu>

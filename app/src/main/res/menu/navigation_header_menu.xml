@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <item
         android:id="@+id/account"
-        android:icon="@drawable/ic_account_black"
+        android:icon="@drawable/ic_account"
+        android:iconTint="@color/pHubGray"
         android:title="Account"
         />
     <item
         android:id="@+id/register"
-        android:icon="@drawable/ic_sign_in_black"
+        android:icon="@drawable/ic_create"
+        android:iconTint="@color/pHubGray"
         android:title="Register" />
     <item
         android:id="@+id/upload"
         android:icon="@drawable/ic_upload_black"
+        android:iconTint="@color/pHubGray"
         android:title="Upload">
     </item>
 

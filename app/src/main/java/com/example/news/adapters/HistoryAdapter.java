@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -32,6 +33,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
     public HistoryAdapter(List<History> histories, Context context) {
         this.histories = histories;
         this.context = context;
+
     }
 
     @NonNull
@@ -44,8 +46,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holders, int position) {
         final MyViewHolder holder = holders;
-        Log.d(TAG, "Creating Adapter " + position);
         History model = histories.get(position);
+
 
         holder.title.setText("Title: " + model.getTitle());
         holder.desc.setText("ID: " + model.getContentPrimaryId());
@@ -77,6 +79,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
         //Views
         TextView title, desc, author, publisher, source, time;
         ImageView imageView, shadowImageView;
+        FrameLayout mDateLayout;
         CardView cardView;
         ProgressBar progressBar;
         OnItemClickListener onItemClickListener;
@@ -95,6 +98,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
             imageView = itemView.findViewById(R.id.img);
             progressBar = itemView.findViewById(R.id.card_progressBar);
             shadowImageView = itemView.findViewById(R.id.card_shadow_bottom);
+            mDateLayout = itemView.findViewById(R.id.layoutDate);
             this.onItemClickListener = onItemClickListener;
         }
         @Override
@@ -106,6 +110,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
     public void setLimit(int limit) {
         this.limit = limit;
     }
+
+    public History getPosition(int position) { return histories.get(position); }
 
     public void setHistories(List<History> histories) {
         this.histories = histories;

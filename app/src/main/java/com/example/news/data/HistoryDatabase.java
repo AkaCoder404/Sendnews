@@ -49,7 +49,6 @@ public abstract class HistoryDatabase extends RoomDatabase {
             historyDao.insert(new History("1","Category","Test Database Entry Ignore","2020/09/06","1234567890","1.0","En","Seg_Text","Source", "Time","Title","Type","Status"));
             historyDao.insert(new History("2","Category","Test Database Entry Ignore","2020/09/07","1234567890","1.0","En","Seg_Text","Source", "Time","Title","Type","Status"));
             historyDao.insert(new History("3","Category","Test Database Entry Ignore","2020/09/08","1234567890","1.0","En","Seg_Text","Source", "Time","Title","Type","Status"));
-
             return null;
         }
     }

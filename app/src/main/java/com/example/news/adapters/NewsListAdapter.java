@@ -2,46 +2,66 @@ package com.example.news.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.example.news.R;
 import com.example.news.Utils;
 import com.example.news.models.Article;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.MyViewHolder> {
+public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.MyViewHolder> implements Filterable {
     // Variables
     private int limit = 10;
     private String TAG = "NewsListAdapter";
     private List<Article> articles;
+    private List<Article> articlesFull;
     private Context context;
     private OnItemClickListener onItemClickListener;
+    private SharedPreferences sharedPreferences;
 
 
     public NewsListAdapter(List<Article> articles, Context context) {
         this.articles = articles;
         this.context = context;
+
+
+
         //Sort By Date --> Make this into function later
         Collections.sort(this.articles, new CustomComparator());
         Collections.reverse(this.articles);
+
+        articlesFull = new ArrayList<>(articles);
     }
+
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -52,7 +72,6 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holders, int position) {
         final MyViewHolder holder = holders;
-        Log.d("Adapter", "Creating Adapter " + position);
         Article model = articles.get(position);
         //Request Options
 //        requestOptions = new RequestOptions();
@@ -66,8 +85,8 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.MyView
         holder.desc.setText("ID: " + model.getId());
         holder.time.setText(model.getTime());
         holder.source.setText(model.getType());
-        holder.publisher.setText("Temp");
-        holder.author.setText("Temp");
+        holder.publisher.setText("");
+        holder.author.setText("");
         //Glide.with(context).load("https://i.imgur.com/bIRGzVO.jpg").into(holder.imageView);
 
         // Since There are No Images
@@ -75,41 +94,71 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.MyView
         holder.shadowImageView.setVisibility(View.GONE);
         holder.progressBar.setVisibility(View.GONE);
 
-        //Test Output
-
-        /*None of them have Images, If there are, UNCOMMENT*/
-//        Glide.with(context)
-//            .load("https://i.imgur.com/bIRGzVO.jpg")
-//            .listener(new RequestListener<Drawable>() {
-//                @Override
-//                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-//                    Log.d("Adapter", "onLoadFailed");
-//                    holder.progressBar.setVisibility(View.GONE);
-//                    return false;
-//                }
-//
-//                @Override
-//                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-//                    Log.d("Adapter", "onResourceReady is ready");
-//                    holder.progressBar.setVisibility(View.GONE);
-//                    return false;
-//                }
-//            })
-//            .transition(DrawableTransitionOptions.withCrossFade())
-//            .into(holder.imageView);
     }
+
     @Override
     public int getItemCount() {
         //Limit Number of Articles
-        if(articles.size() > limit) { return limit; }
-        else { return articles.size(); }
+        if (articles.size() > limit) {
+            return limit;
+        } else {
+            return articles.size();
+        }
     }
+
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
+
+    @Override
+    public Filter getFilter() {
+        return exampleFilter;
+    }
+
+    private Filter exampleFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            List<Article> filterList = new ArrayList<>();
+            sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+            String category = sharedPreferences.getString("CATEGORYFILTER", context.getString(R.string.settings_all_label));
+            System.out.println(category);
+
+            if (charSequence == null) {
+                filterList.addAll(articlesFull);
+            } else if (category.equalsIgnoreCase("ALL CATEGORIES")) {
+                String filterPattern = charSequence.toString().toLowerCase().trim();
+                for (Article article : articlesFull) {
+                    if (article.getTitle().toLowerCase().contains(filterPattern)) {
+                        filterList.add(article);
+                    }
+                }
+            }
+            else {
+                String filterPattern = charSequence.toString().toLowerCase().trim();
+                for (Article article : articlesFull) {
+                    if (article.getTitle().toLowerCase().contains(filterPattern) && article.getType().equalsIgnoreCase(category)) {
+                        filterList.add(article);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filterList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            articles.clear();
+            articles.addAll((List) filterResults.values);
+            notifyDataSetChanged();
+        }
+    };
+
     public interface OnItemClickListener {
         void onItemClick(View view, int position);
     }
+
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         //Views
         TextView title, desc, author, publisher, source, time;
@@ -137,14 +186,9 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.MyView
         }
         @Override
         public void onClick(View v) {
-            Log.d(TAG, "Item Clicked " + getAdapterPosition());
             this.onItemClickListener.onItemClick(v, getAdapterPosition());
         }
     }
-
-
-
-
 
     public class CustomComparator implements Comparator<Article> {
         @Override

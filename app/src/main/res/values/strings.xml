@@ -15,4 +15,33 @@
     <string name="name2"></string>
     <string name="name3"></string>
 
+
+    <!-- Settings -->
+    <string name="settings_all_label">All</string>
+    <string name="settings_entertainment_label">娱乐</string>
+    <string name="settings_military_label">军事</string>
+    <string name="settings_education_label">教育</string>
+    <string name="settings_culture_label">文化</string>
+    <string name="settings_health_label">健康</string>
+    <string name="settings_finance_label">财经</string>
+    <string name="settings_sports_label">体育</string>
+    <string name="settings_automobile_label">汽车</string>
+    <string name="settings_technology_label">科技</string>
+    <string name="settings_society_label">社会</string>
+
+    <string name="settings_filter_label">Filter news categories</string>
+    <string name="settings_filter_key">filter</string>
+    <string name="settings_date_label">Set start date</string>
+    <string name="settings_date_key">date</string>
+    <string name="settings_clear_history">Clear history</string>
+    <string name="settings_clear_recommendations">Clear recommendations</string>
+    <string name="settings_history_key">history</string>
+    <string name="settings_recommend_key">recommend</string>
+    <string name="settings_dark_key">dark</string>
+    <string name="settings_dark_title">Enable dark mode</string>
+    <string name="settings_search_key">search</string>
+    <string name="settings_search_title">Search by keyword</string>
+    <string name="settings_omit_key">omit</string>
+    <string name="settings_omit_title">Omit word from search</string>
+
 </resources>

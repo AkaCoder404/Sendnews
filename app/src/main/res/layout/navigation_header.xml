@@ -7,7 +7,7 @@
     android:padding="0dp"
     android:layout_marginBottom="40dp"
     android:background="@color/pHubSideBar"
-    android:theme="@style/AppThemeTwo"
+    android:theme="@style/AppTheme"
     >
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -16,10 +16,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="bottom"
         android:background="@color/pHubSideBar"
-
         app:itemBackground="@color/pHubSideBar"
         app:itemIconSize="25dp"
-
         app:itemTextColor="#ffffff"
         app:menu="@menu/navigation_header_menu"/>
 
