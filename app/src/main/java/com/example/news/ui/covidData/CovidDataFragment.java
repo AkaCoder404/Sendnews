@@ -8,16 +8,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.news.R;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.components.XAxis;
@@ -25,7 +23,6 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
 import org.json.JSONArray;
@@ -39,34 +36,53 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
-import java.util.Comparator;
 
 public class CovidDataFragment extends Fragment {
 
     HorizontalBarChart chart;
+    HorizontalBarChart chart2;
     ProgressBar pg;
     HashMap<String, float[]> map = new HashMap<String, float[]>();
     ArrayList<BarEntry> dataVals;
     ArrayList<String> keyList;
     int[] colorClassArray = new int[]{Color.RED, Color.GREEN, Color.YELLOW};
+    Button button1;
+    Button button2;
 
     public View onCreateView(@NonNull LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
         final View root = inflater.inflate(R.layout.fragment_covid_data, container, false);
 //        Toast.makeText(getActivity(), "CovidDataFragment", Toast.LENGTH_SHORT).show();
 //        final TextView textView = root.findViewById(R.id.textView);
 
-        chart = (HorizontalBarChart) root.findViewById(R.id.stacked_BarChart);
+        chart = (HorizontalBarChart) root.findViewById(R.id.countries);
         chart.setNoDataText("");
 
+        chart2 = (HorizontalBarChart) root.findViewById(R.id.china);
+        chart2.setNoDataText("china");
+
         pg = (ProgressBar) root.findViewById(R.id.progressbar);
+
+        button1 = (Button) root.findViewById(R.id.button1);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chart.setVisibility(View.INVISIBLE);
+                chart2.setVisibility(View.VISIBLE);
+            }
+        });
+
+        button2 = (Button) root.findViewById(R.id.button2);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chart.setVisibility(View.VISIBLE);
+                chart2.setVisibility(View.INVISIBLE);
+            }
+        });
 
         dataVals = new ArrayList<>();
         new Thread(new Runnable() {
@@ -146,6 +162,7 @@ public class CovidDataFragment extends Fragment {
                             yAxis.setTextColor(getResources().getColor(R.color.white));
                             yAxis.setAxisLineColor(getResources().getColor(R.color.white));
                             yAxis.setAxisLineWidth(2);  // y ashix line size
+                            yAxis.setAxisMinValue(0);
                             yAxis.setLabelCount(5);
 
                             YAxis rightAxis = chart.getAxisRight();

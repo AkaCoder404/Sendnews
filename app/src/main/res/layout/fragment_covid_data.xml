@@ -14,17 +14,42 @@
     <!--        android:layout_margin="10dp"-->
     <!--        android:backgroundTint="@color/pHubSideBar"/>-->
 
-    <com.github.mikephil.charting.charts.HorizontalBarChart
-        android:id="@+id/stacked_BarChart"
+    <ProgressBar
+        android:id="@+id/progressbar"
+        style="?android:attr/progressBarStyle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="423dp" />
 
-        <ProgressBar
-            android:id="@+id/progressbar"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+    <com.github.mikephil.charting.charts.HorizontalBarChart
+        android:id="@+id/countries"
+        android:layout_width="match_parent"
+        android:layout_height="719dp">
 
     </com.github.mikephil.charting.charts.HorizontalBarChart>
+
+    <com.github.mikephil.charting.charts.HorizontalBarChart
+        android:id="@+id/china"
+        android:layout_width="match_parent"
+        android:layout_height="719dp">
+
+    </com.github.mikephil.charting.charts.HorizontalBarChart>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+    </LinearLayout>
 
 </FrameLayout>
