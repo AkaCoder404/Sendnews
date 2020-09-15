@@ -63,6 +63,7 @@ public class CovidDataFragment extends Fragment {
 
         chart = (HorizontalBarChart) root.findViewById(R.id.countries);
         chart.setNoDataText("");
+        chart.getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT;
 
         chart2 = (HorizontalBarChart) root.findViewById(R.id.china);
         chart2.setNoDataText("");

@@ -184,6 +184,9 @@ public class NewsDetailActivity extends AppCompatActivity implements AppBarLayou
                     // mUrls            = body.getDATA().getUrls();
                     mStatusString       = body.getStatus();
 
+                    mTitleString        = body.getData().getTitle();
+
+
                     // Show Information
                     mTextView.setText(mContentString);
 
@@ -212,13 +215,13 @@ public class NewsDetailActivity extends AppCompatActivity implements AppBarLayou
                     }
 
                     //If Components are Empty
-                    if (mSourceString != null && mSourceString.equalsIgnoreCase("")) {
+                    if (mSourceString != null && !mSourceString.equalsIgnoreCase("")) {
                         mSubtitle.setText(mSourceString);
                     }
                     else {
                         mSubtitle.setText("No Source");
                     }
-                    if (mContentString != null && mContentString.equalsIgnoreCase("")) {
+                    if (mContentString != null && !mContentString.equalsIgnoreCase("")) {
                         mTextView.setText(mContentString);
                     }
                     else {
@@ -267,7 +270,7 @@ public class NewsDetailActivity extends AppCompatActivity implements AppBarLayou
                 Intent i = new Intent(Intent.ACTION_SEND);
                 i.setType("text/plain");
                 i.putExtra(Intent.EXTRA_SUBJECT, mSourceString);
-                String body = mTitle + "\n\n"  + "API URL: https://covid-dashboard-api.aminer.cn/event/" + mUrlString + "\n\n" + mDate + "\n\n" +  mContentString;
+                String body = mTitleString + "\n\n"  + "API URL: https://covid-dashboard-api.aminer.cn/event/" + mUrlString + "\n\n" + mDateString + "\n\n" +  mContentString;
                 i.putExtra(Intent.EXTRA_TEXT, body);
                 startActivity(Intent.createChooser(i, "Share with : "));
             } catch (Exception e)  {

@@ -24,14 +24,15 @@
     <com.github.mikephil.charting.charts.HorizontalBarChart
         android:id="@+id/countries"
         android:layout_width="match_parent"
-        android:layout_height="719dp">
+        android:layout_height="match_parent">
 
     </com.github.mikephil.charting.charts.HorizontalBarChart>
 
     <com.github.mikephil.charting.charts.HorizontalBarChart
         android:id="@+id/china"
         android:layout_width="match_parent"
-        android:layout_height="719dp">
+        android:layout_height="match_parent"
+        android:paddingBottom="50dp">
 
     </com.github.mikephil.charting.charts.HorizontalBarChart>
 
